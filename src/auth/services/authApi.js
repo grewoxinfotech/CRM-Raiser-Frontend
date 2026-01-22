@@ -132,7 +132,7 @@ export const authApi = createApi({
                     dispatch(loginFailure(error.error?.message || 'Login failed'));
                 }
             },
-        },
+        }),
     }),
 });
 
