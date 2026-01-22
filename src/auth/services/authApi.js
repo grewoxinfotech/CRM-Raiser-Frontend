@@ -132,16 +132,12 @@ export const authApi = createApi({
                     dispatch(loginFailure(error.error?.message || 'Login failed'));
                 }
             },
-        }),
-        getRole: builder.query({
-            query: (roleId) => `/roles/${roleId}`,
-        }),
+        },
     }),
 });
 
 export const {
     useLoginMutation,
     useAdminLoginMutation,
-    useGetRoleQuery,
     useRegisterMutation
 } = authApi;

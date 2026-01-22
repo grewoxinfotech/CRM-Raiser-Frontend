@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import router from './routes'
 import './styles/index.scss'
+import ErrorBoundary from './components/ErrorBoundary'
 // import SiteSettingsInitializer from './components/SiteSettingsInitializer'
 
 const LoadingFallback = () => (
@@ -17,17 +18,19 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <Suspense fallback={<LoadingFallback />}>
-      {/* <SiteSettingsInitializer /> */}
-      <RouterProvider
-        router={router}
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true
-        }}
-        fallbackElement={<LoadingFallback />}
-      />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingFallback />}>
+        {/* <SiteSettingsInitializer /> */}
+        <RouterProvider
+          router={router}
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true
+          }}
+          fallbackElement={<LoadingFallback />}
+        />
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 

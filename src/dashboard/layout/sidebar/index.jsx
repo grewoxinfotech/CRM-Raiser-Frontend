@@ -107,8 +107,22 @@ const Sidebar = ({
   const userRoleData = userRole?.toLowerCase() !== 'client' ?
     rolesData?.message?.data?.find(role => role.id === loggedInUser?.role_id) : null;
 
-  // Parse permissions if they exist
-  const userPermissions = userRoleData?.permissions ? JSON.parse(userRoleData.permissions) : null;
+  // Parse permissions if they exist - handle both string and object formats
+  const userPermissions = React.useMemo(() => {
+    if (!userRoleData?.permissions) return null;
+    
+    try {
+      // If it's already an object, return it directly
+      if (typeof userRoleData.permissions === 'object') {
+        return userRoleData.permissions;
+      }
+      // If it's a string, try to parse it
+      return JSON.parse(userRoleData.permissions);
+    } catch (error) {
+      console.error('Error parsing permissions in sidebar:', error);
+      return null;
+    }
+  }, [userRoleData]);
 
 
   const checkPermission = (moduleKey) => {

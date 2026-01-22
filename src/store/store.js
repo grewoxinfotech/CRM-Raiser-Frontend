@@ -78,6 +78,24 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["auth", "leadStage", "dealStage"],
+  // Add transforms to handle serialization issues
+  transforms: [
+    {
+      in: (state) => {
+        // Ensure state is properly serialized before storing
+        try {
+          return JSON.parse(JSON.stringify(state));
+        } catch (error) {
+          console.error('Error serializing state:', error);
+          return state;
+        }
+      },
+      out: (state) => {
+        // Ensure state is properly deserialized when retrieving
+        return state;
+      }
+    }
+  ],
 };
 
 const rootReducer = (state, action) => {
