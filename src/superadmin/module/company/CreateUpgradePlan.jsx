@@ -183,7 +183,7 @@ const CreateUpgradePlan = ({ open, onCancel, companyId, preselectedPlanId = null
                     key: keyId,
                     amount: amount,
                     currency: 'INR',
-                    name: 'CRM Grewox',
+                    name: `${planName}`,
                     description: `Payment for ${planName}`,
                     order_id: orderId,
                     handler: async function (response) {
